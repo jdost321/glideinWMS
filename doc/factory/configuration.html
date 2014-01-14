@@ -97,8 +97,8 @@ for a more detailed description.
         <a href="#">&lt;job_logs max_days="7.0" max_mbytes="100.0" min_days="3.0" /&gt;</a><br/>
         <a href="#">&lt;process_logs &gt;</a><br/>
         <blockquote>
-            <a href="#process_logs">&lt;process_log extension="info" max_days="7.0" max_mbytes="100.0" min_days="3.0" msg_types="INFO" /&gt;</a><br/>
-            <a href="#process_logs">&lt;process_log extension="debug" max_days="7.0" max_mbytes="100.0" min_days="3.0" msg_types="DEBUG,ERR,WARN" /&gt;</a><br/>
+            <a href="#process_logs">&lt;process_log backup_count="5" extension="info" max_days="7.0" max_mbytes="100.0" min_days="3.0" msg_types="INFO" /&gt;</a><br/>
+            <a href="#process_logs">&lt;process_log backup_count="5" extension="debug" max_days="7.0" max_mbytes="100.0" min_days="3.0" msg_types="DEBUG,ERR,WARN" /&gt;</a><br/>
         </blockquote>
         <a href="#">&lt;/process_logs &gt;</a><br/>
         <a href="#">&lt;summary_logs max_days="31.0" max_mbytes="100.0" min_days="3.0" /&gt;</a><br/>
@@ -296,13 +296,15 @@ individual entry point configuration.
         <a name="process_logs" />
         <div class="xml">
             &lt;glidein&gt;&lt;log_retention&gt;&lt;process_logs&gt;&lt;process_log 
+            backup_count=&quot;<I>backup count</I>&quot;
+            extension=&quot;<I>file extension</I>&quot;
             max_days=&quot;<I>max days</I>&quot;
             min_days=&quot;<I>min days</I>&quot;
-            max_bytes=&quot;<I>max bytes</I>&quot;
+            max_mbytes=&quot;<I>max bytes</I>&quot;
             type=&quot;<I>INFO</I>&quot;/&gt;
         </div>
     <p>
-    The admin can configure one or more logs with any combination of following log message types: 
+    <b>type: </b>The admin can configure one or more logs with any combination of following log message types: 
     <ul>
     <li>INFO:  Informational messages about the state of the system. </li>
     <li>DEBUG:  Debug message. These are additional informational messages that describe code execution in detail.</li>
@@ -310,7 +312,16 @@ individual entry point configuration.
     <li>WARN: Warning messages. These warn of conditions that were found that don't necessarily cause abnormal execution.</li>
     <li>ADMIN: This is a special setting only applicable to factory logs (and not entry logs) that contains admin messages, such as reconfig comments.  This will create a new log called factoryadmin.extension.log.  Currently, it cannot be combined with other message types.</li>
     </ul>
-    The extension is added to the log name to create separate logs.
+    <b>extension: </b>The extension is added to the log name to create separate logs.<br><br>
+    <b>max_mbytes: </b>Max size of a log file in MB.<br><br>
+    <b>backup_count: </b>Max number of rotated files to keep.<br><br>
+    <b>min_days: </b>Min number of days of logs to store in a log file.<br><br>
+    <b>max_days: </b>Max number of days of logs to store in a log file.<br><br>
+    <b>Rotation Policy: </b>Jobs are rotated using a combination of time
+    based rotation and logfile size based rotations, which ever happens first.
+    Size based rotation happens when log file size reaches or exceeds
+    max_mbytes. Time based rotation will store logs in the active log file
+    between min_days and max_days before rotating.
     </p>
     </li>
     <LI>
