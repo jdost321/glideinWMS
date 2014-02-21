@@ -308,7 +308,7 @@ def main(work_dir):
     # start
     try:
         pid_obj.register()
-    except AlreadyRunning, err:
+    except  glideinFrontendPidLib.pidSupport.AlreadyRunning, err:
         logSupport.log.exception("Exception during registration: %s" % err)
         raise
     try:
