@@ -50,7 +50,7 @@ def run_command(service,user,node,command):
     stdout = glideinwms.lib.subprocessSupport.iexe_cmd(cmd,useShell=True)
   except glideinwms.lib.subprocessSupport.CalledProcessError, e:
     common.logit(stdout)
-    common.logerr("Requested action failed.")
+    common.logerr("Requested action failed: " + str(e))
     #TODO: should re-rise the exceptopn? How should it be handled? exit?
   common.logit(stdout)
   common.logit("## %s " % hdr)
